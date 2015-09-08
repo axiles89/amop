@@ -10,7 +10,7 @@
     </div>
     <div class="login-box-body">
         <p class="login-box-msg">Введите нужные данные для входа в систему</p>
-        {ActiveForm assign='form' id='login-form' action='/form-handler' }
+        {ActiveForm assign='form' id='login-form' action='' method="post"}
 
             {$form->field($model, 'email', ['options' => ['class' => 'form-group has-feedback'],
                                 'template' => '{input}<span class="glyphicon glyphicon-envelope form-control-feedback"></span> <div class="help-block">{error}</div>'])

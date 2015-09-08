@@ -10,7 +10,7 @@
     </div>
     <div class="register-box-body">
         <p class="login-box-msg">Регистрация нового пользователя</p>
-        {ActiveForm assign='form' id='login-form' action='/login/register' method="post"}
+        {ActiveForm assign='form' id='login-form' action='/login/register' method="post" options=['enctype' => 'multipart/form-data']}
 
             {$form->field($model, 'login', ['options' => ['class' => 'form-group has-feedback'],
                                 'template' => '{input}<span class="glyphicon glyphicon-user form-control-feedback"></span> <div class="help-block">{error}</div>'])
