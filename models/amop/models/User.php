@@ -6,7 +6,7 @@ use Yii;
 use yii\web\IdentityInterface;
 
 /**
- * This is the model class for table "user".
+ * Класс таблицы user для хранения пользователей
  *
  * @property integer $id
  * @property string $date_create

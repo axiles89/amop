@@ -13,6 +13,11 @@ namespace app\models\form\login;
 use app\models\amop\models\User;
 use yii\base\Model;
 
+/**
+ * Форма авторизации
+ * Class LoginForm
+ * @package app\models\form\login
+ */
 class LoginForm extends Model
 {
     public $email;
@@ -60,6 +65,10 @@ class LoginForm extends Model
     }
 
 
+    /**
+     * Получение пользователя по почте
+     * @return array|bool|null|\yii\db\ActiveRecord
+     */
     protected function getUser() {
         if ($this->_user === false) {
             $this->_user = User::find()->where(['email' => $this->email])->one();
@@ -69,6 +78,10 @@ class LoginForm extends Model
     }
 
 
+    /**
+     * Авторизация пользователя
+     * @return bool
+     */
     public function login() {
         if ($this->validate()) {
             return \Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
