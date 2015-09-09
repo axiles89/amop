@@ -33,6 +33,9 @@
     "scripts": {
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject"
+        ],
+        "post-install-cmd": [
+            "php checkRequirements.php"
         ]
     },
     "extra": {
