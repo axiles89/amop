@@ -19,6 +19,7 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     const SCENARIO_REGISTER = 1;
+    const CACHE_TIME = 20;
 
     public $retypePassword;
     public $imageAvatar;
@@ -91,7 +92,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds an identity by the given ID.
+     * Поиск компонента авторизованного юзера по его id (кешируем данные)
      * @param string|integer $id the ID to be looked for
      * @return IdentityInterface the identity object that matches the given ID.
      * Null should be returned if such an identity cannot be found
@@ -99,7 +100,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne($id);
+        $identity =  self::getDb()->cache(function($db) use($id) {
+            return static::findOne($id);
+        }, self::CACHE_TIME);
+
+        return $identity;
     }
 
     /**
