@@ -42,6 +42,23 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['login/index'],
         ],
+        'redis' => [
+             'class' => 'yii\redis\Connection',
+             'hostname' => '127.0.0.1',
+             'port' => 6379,
+             'database' => 2,
+        ],
+        'cache' => [
+             'class' => 'yii\redis\Cache',
+             'redis' => [
+             'hostname' => '127.0.0.1',
+             'port' => 6379,
+             'database' => 2
+              ]
+        ],
+        'session' => [
+                    'class' => 'yii\redis\Session',
+                ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
