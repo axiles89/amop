@@ -26,6 +26,7 @@ return [
             ],
         ],
         'db' => $db,
+        'db-test' => require(__DIR__ . '/db-test.php')
     ],
     'params' => $params,
 ];
