@@ -14,13 +14,23 @@ return [
     ],
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=localhost;dbname=yii2_basic_tests',
+            'dsn' => 'mysql:host=localhost;dbname=amop-test',
         ],
         'mailer' => [
             'useFileTransport' => true,
         ],
         'urlManager' => [
             'showScriptName' => true,
+        ],
+        'redis' => [
+            'database' => 3
+        ],
+        'cache' => [
+            'redis' => [
+                'hostname' => '127.0.0.1',
+                'port' => 6379,
+                'database' => 3
+            ]
         ],
     ],
 ];
