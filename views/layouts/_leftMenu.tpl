@@ -1,7 +1,53 @@
+{use class="app\components\widget\leftMenu\LeftMenu" type="function"}
+
+
+{LeftMenu::widget([
+    'user' => [
+            'data' => [
+                'avatar' => $app->user->getIdentity()->avatar,
+                'name' => $app->user->getIdentity()->name,
+                'surname' => $app->user->getIdentity()->surname
+            ]
+    ],
+    'menu' => [
+        'header' => 'MAIN NAVIGATION',
+        'active' => 'dash_2',
+        'item' => [
+                [
+                    'label' => 'Dashboard',
+                    'name' => 'dash',
+                    'badges' => ['class' => 'label label-primary pull-right', 'label' => 4],
+                    'icon_class' => 'fa fa-dashboard',
+                    'url' => "#",
+                    'item' => [
+                        [
+                            'label' => 'Dashboard v1',
+                            'name' => 'dash_1',
+                            'icon_class' => 'fa fa-circle-o',
+                            'url' => 'index.html',
+                            'badges' => ['class' => 'label pull-right bg-green', 'label' => '12', 'tag' => 'small']
+                        ],
+                        [
+                            'label' => 'Dashboard v2',
+                            'name' => 'dash_2',
+                            'icon_class' => 'fa fa-circle-o',
+                            'url' => 'index2.html'
+                        ]
+                    ]
+                ],
+                [
+                    'label' => 'Widgets',
+                    'name' => 'widget',
+                    'icon_class' => 'fa fa-th',
+                    'badges' => ['class' => 'label pull-right bg-green', 'label' => 'new', 'tag' => 'small']
+                ]
+        ]
+    ]
+])}
+
+<!--
 <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-        <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
                 <img src="/image/avatar/{$app->user->getIdentity()->avatar}" class="img-circle" alt="User Image">
@@ -12,10 +58,10 @@
             </div>
         </div>
 
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active treeview">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -149,4 +195,5 @@
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
         </ul>
     </section>
-    </aside>
+</aside>
+<--!>
