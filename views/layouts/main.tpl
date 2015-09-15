@@ -19,8 +19,18 @@
 
 <div class="wrapper">
 
-    {include '_header.tpl'}
-    {include '_leftMenu.tpl'}
+    {include '@app/views/layouts/_header.tpl'}
+    {include '@app/views/layouts/_leftMenu.tpl'}
+
+
+    <div class="content-wrapper">
+
+        <!-- Main content -->
+        <section class="content">
+            {$content}
+        </section>
+
+    </div>
 
 </div>
 
