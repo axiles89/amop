@@ -1,7 +1,12 @@
+{use class="app\components\widget\leftMenu\LeftMenu" type="function"}
+{use class="app\components\widget\leftMenu\data\Data"}
+
+
+{LeftMenu::widget(Data::getData($this->params['leftMenu']['active']))}
+
+<!--
 <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-        <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
                 <img src="/image/avatar/{$app->user->getIdentity()->avatar}" class="img-circle" alt="User Image">
@@ -12,10 +17,10 @@
             </div>
         </div>
 
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active treeview">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -149,4 +154,5 @@
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
         </ul>
     </section>
-    </aside>
+</aside>
+<--!>
