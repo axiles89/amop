@@ -1,49 +1,8 @@
 {use class="app\components\widget\leftMenu\LeftMenu" type="function"}
+{use class="app\components\widget\leftMenu\data\Data"}
 
 
-{LeftMenu::widget([
-    'user' => [
-            'data' => [
-                'avatar' => $app->user->getIdentity()->avatar,
-                'name' => $app->user->getIdentity()->name,
-                'surname' => $app->user->getIdentity()->surname
-            ]
-    ],
-    'menu' => [
-        'header' => 'MAIN NAVIGATION',
-        'active' => 'dash_2',
-        'item' => [
-                [
-                    'label' => 'Dashboard',
-                    'name' => 'dash',
-                    'badges' => ['class' => 'label label-primary pull-right', 'label' => 4],
-                    'icon_class' => 'fa fa-dashboard',
-                    'url' => "#",
-                    'item' => [
-                        [
-                            'label' => 'Dashboard v1',
-                            'name' => 'dash_1',
-                            'icon_class' => 'fa fa-circle-o',
-                            'url' => 'index.html',
-                            'badges' => ['class' => 'label pull-right bg-green', 'label' => '12', 'tag' => 'small']
-                        ],
-                        [
-                            'label' => 'Dashboard v2',
-                            'name' => 'dash_2',
-                            'icon_class' => 'fa fa-circle-o',
-                            'url' => 'index2.html'
-                        ]
-                    ]
-                ],
-                [
-                    'label' => 'Widgets',
-                    'name' => 'widget',
-                    'icon_class' => 'fa fa-th',
-                    'badges' => ['class' => 'label pull-right bg-green', 'label' => 'new', 'tag' => 'small']
-                ]
-        ]
-    ]
-])}
+{LeftMenu::widget(Data::getData($this->params['leftMenu']['active']))}
 
 <!--
 <aside class="main-sidebar">

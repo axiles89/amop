@@ -17,4 +17,16 @@ class BaseController extends Controller
 {
     public $layout = "main.tpl";
 
+    /**
+     * Initializes the object.
+     * This method is invoked at the end of the constructor after the object is initialized with the
+     * given configuration.
+     */
+    public function init()
+    {
+        parent::init();
+        $this->getView()->params['leftMenu']['active'] = null;
+    }
+
+
 }
