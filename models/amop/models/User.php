@@ -19,7 +19,7 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     const SCENARIO_REGISTER = 1;
-    const CACHE_TIME = 20;
+    const CACHE_TIME = 600;
 
     public $retypePassword;
     public $imageAvatar;

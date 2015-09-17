@@ -96,3 +96,16 @@ a.desc:after {
     padding-right: 15px;
     padding-left: 15px
 }
+
+.box-add-project {
+    margin-top: 20px;
+    width: 800px;
+}
+
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+    color: #dd4b39;
+}
+
+.box-footer {
+    padding: 0px;
+}
