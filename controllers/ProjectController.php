@@ -9,7 +9,8 @@
 
 namespace app\controllers;
 
-
+use Yii;
+use yii\data\ActiveDataProvider;
 use app\models\amop\models\Project;
 use yii\filters\AccessControl;
 
@@ -20,6 +21,9 @@ use yii\filters\AccessControl;
  */
 class ProjectController extends BaseController
 {
+
+    const PAGE_SIZE = 100;
+    const CACHE_TIME_LIST_PROJECT = 600;
 
     public function behaviors()
     {
@@ -36,6 +40,32 @@ class ProjectController extends BaseController
         ];
     }
 
+    public function actionIndex()
+    {
+        $cache = false;
+
+        $query = Project::find()->where(['staff_id' => Yii::$app->user->id])
+            ->with('staff');
+
+        $data = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => self::PAGE_SIZE
+            ],
+            'sort' => false
+        ]);
+
+        if (Yii::$app->request->get('page') == '' or Yii::$app->request->get('page') == 1) {
+            $cache = true;
+        }
+
+        return $this->render('index.tpl',[
+            'data' => $data,
+            'cache' => $cache,
+            'cacheTime' => self::CACHE_TIME_LIST_PROJECT
+        ]);
+    }
+
 
     public function actionAdd(){
         \Yii::$app->getView()->params['leftMenu']['active'] = 'project_add';
@@ -47,7 +77,7 @@ class ProjectController extends BaseController
             $model->staff_id = \Yii::$app->user->id;
             if ($model->validate()) {
                 $model->save();
-                \Yii::$app->response->redirect('/project/list')->send();
+                \Yii::$app->response->redirect('/project/index')->send();
             }
         }
 

@@ -40,6 +40,14 @@ class Project extends \yii\db\ActiveRecord
         ];
     }
 
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStaff() {
+        return $this->hasOne(User::className(), ['id' => 'staff_id']);
+    }
+
     /**
      * Генерируем дату создания и обновляем дату обновления
      * @inheritDoc

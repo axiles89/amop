@@ -97,6 +97,10 @@ a.desc:after {
     padding-left: 15px
 }
 
+.box-data {
+    margin-top: 20px;
+}
+
 .box-add-project {
     margin-top: 20px;
     width: 800px;
