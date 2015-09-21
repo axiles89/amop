@@ -32,7 +32,8 @@ class ProjectListConfig
             'tableOptions' => [
                 'class' => 'table table-bordered table-hover dataTable'
             ],
-            'layout' => '{items}{pager}',
+            'layout' => "{items}{summary}{pager}",
+            'summary' => "<span>Показано {begin} - {end} ,  всего {totalCount}</span>",
             'pager' => [
                 'options' => ['class' => 'pagination', 'style' => ['float' => 'right']]
             ],
@@ -70,7 +71,7 @@ class ProjectListConfig
                                 '<span class="glyphicon glyphicon-trash"></span>',
                                 '/project/delete/'.$model->id, [
                                     'title' => 'Удалить',
-                                    'data-confirm' => 'Действительно удалить проект',
+                                    'data-confirm' => 'Действительно удалить проект?',
                                     'data-method' => 'post',
                                     'data-pjax' => '1',
                                 ]);

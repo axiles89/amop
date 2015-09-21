@@ -23,7 +23,7 @@ class ProjectController extends BaseController
 {
 
     const PAGE_SIZE = 100;
-    const CACHE_TIME_LIST_PROJECT = 600;
+    const CACHE_TIME_LIST_PROJECT = 300;
 
     public function behaviors()
     {
@@ -40,8 +40,44 @@ class ProjectController extends BaseController
         ];
     }
 
+    /**
+     * Редактирование проекта
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionEdit($id) {
+
+        \Yii::$app->getView()->params['leftMenu']['active'] = "project_$id";
+
+        $model = $this->findModel($id);
+
+        if (\Yii::$app->request->isPost and $model->load(\Yii::$app->request->post()) and \Yii::$app->user->id == $model->staff_id and $model->save()) {
+            \Yii::$app->response->redirect('/project/index')->send();
+        }
+
+        return $this->render('edit.tpl', [
+                'model' => $model,
+        ]);
+    }
+
+    /**
+     * Удаление проекта
+     * @param $id
+     * @throws NotFoundHttpException
+     */
+    public function actionDelete($id) {
+
+        $model = $this->findModel($id)->delete();
+        \Yii::$app->response->redirect('/project/index')->send();
+    }
+
+    /**
+     * Список проектов пользователя
+     * @return string
+     */
     public function actionIndex()
     {
+
         $cache = false;
 
         $query = Project::find()->where(['staff_id' => Yii::$app->user->id])
@@ -67,6 +103,10 @@ class ProjectController extends BaseController
     }
 
 
+    /**
+     * Добавление проекта
+     * @return string
+     */
     public function actionAdd(){
         \Yii::$app->getView()->params['leftMenu']['active'] = 'project_add';
 
@@ -84,6 +124,21 @@ class ProjectController extends BaseController
         return $this->render('add.tpl',[
             'model' => $model
         ]);
+    }
+
+    /**
+     * Получение модели проекта
+     * @param $id
+     * @return null|static
+     * @throws NotFoundHttpException
+     */
+    protected function findModel($id)
+    {
+        if (($model = Project::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Проект не найден');
+        }
     }
 
 }

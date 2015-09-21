@@ -20,7 +20,7 @@ use yii\base\Object;
  */
 class Data extends Object
 {
-    const CACHE_PROJECT_TIME = 20;
+    const CACHE_PROJECT_TIME = 300;
 
     protected static $data = [
         'user' => [

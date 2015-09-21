@@ -22,7 +22,6 @@
                  <!-- Кеширование первой страницы списка проектов -->
                 {if ($this->beginCache("gridview:project:list:{$app->user->id}", ['duration' => $cacheTime, 'enabled' => $cache]))}
                     {GridView::widget(ProjectListConfig::getData($data))}
-
                     {$this->endCache()}
                 {/if}
         </div>
