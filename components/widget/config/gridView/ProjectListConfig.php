@@ -38,7 +38,7 @@ class ProjectListConfig
                 'options' => ['class' => 'pagination', 'style' => ['float' => 'right']]
             ],
             'columns' => [
-                ['class' => SerialColumn::className()],
+                'id',
                 'title',
                 [
                     'attribute' => 'date_create',
