@@ -13,9 +13,38 @@ return [
     'modules' => [
         'gii' => 'yii\gii\Module',
     ],
+    'controllerMap' => [
+        'gearman' => [
+            'class' => 'shakura\yii2\gearman\GearmanController',
+            'gearmanComponent' => 'gearman'
+        ]
+    ],
     'components' => [
+       'gearman' => [
+            'class' => 'shakura\yii2\gearman\GearmanComponent',
+            'servers' => [
+                ['host' => '127.0.0.1', 'port' => 4730],
+            ],
+            'user' => 'www-data',
+            'jobs' => [
+                'AddProfiler' => [
+                    'class' => 'app\components\service\jobs\AddProfiler'
+                ]
+            ]
+        ],
+        'user' => [
+            'class' => 'app\models\amop\models\User',
+        ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\redis\Cache',
+            'redis' => [
+                'hostname' => '127.0.0.1',
+                'port' => 6379,
+                'database' => 2
+            ]
+        ],
+        'session' => [
+            'class' => 'yii\redis\Session',
         ],
         'log' => [
             'targets' => [

@@ -2,4 +2,7 @@
 
 return [
     'adminEmail' => 'admin@example.com',
+    'projectKey' => 'ddsdsdsd',
+    'projectId' => 12,
+    'amopHost' => 'http://www.amop.ru'
 ];
