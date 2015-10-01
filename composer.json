@@ -19,7 +19,8 @@
         "codeception/codeception": "2.0.*",
         "codeception/specify": "*",
         "codeception/verify": "*",
-        "rmrevin/yii2-fontawesome": "~2.9"
+        "rmrevin/yii2-fontawesome": "~2.9",
+        "shakura/yii2-gearman": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
