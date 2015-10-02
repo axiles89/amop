@@ -10,6 +10,7 @@
 namespace app\components\service\jobs;
 
 
+use app\models\amop\models\ListProfiler;
 use app\models\amop\models\Profiler;
 use GearmanJob;
 use shakura\yii2\gearman\JobBase;
@@ -30,11 +31,24 @@ class AddProfiler extends JobBase
     {
         $data = $this->getWorkload($job)->getParams()['data'];
 
+        // Создаем нужный элемент профилирования
+        $listProfiler = ListProfiler::findOne(['message' => $data->message, 'project_id' => $data->project_id]);
+
+        if (!$listProfiler) {
+            $listProfiler = new ListProfiler();
+            $listProfiler->message = $data->message;
+            $listProfiler->project_id = $data->project_id;
+        }
+
+        if (!$listProfiler->save()) {
+            return false;
+        }
+
         $model = new Profiler();
         $model->date_create =  \Yii::$app->formatter->asDate($data->date_create, 'yyyy-MM-dd H:m:s');
         $model->project_id = $data->project_id;
         $model->type = $data->type;
-        $model->message = $data->message;
+        $model->message_id = $listProfiler->id;
         $model->duration = $data->duration;
         $model->time_start = $data->time_start;
         $model->time_end = $data->time_end;

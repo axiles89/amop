@@ -2,6 +2,10 @@
 
 use yii\db\Migration;
 
+/**
+ * Таблица пользователя
+ * Class m150904_201431_User
+ */
 class m150904_201431_User extends Migration
 {
     public function up()

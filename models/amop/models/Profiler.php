@@ -40,15 +40,14 @@ class Profiler extends \yii\db\ActiveRecord
     {
         return [
             [['date_create', 'date_update'], 'safe'],
-            [['project_id', 'type', 'message', 'duration'], 'required'],
+            [['project_id', 'type', 'message_id', 'duration'], 'required'],
             [['type'], function($attribute, $params) {
                 if (!array_key_exists($this->$attribute, $this->_typeList)) {
                     $this->addError($attribute, 'Type message not found');
                 }
             }],
             [['date_create', 'date_update'], 'date', 'format' => 'yyyy-MM-dd H:m:s'],
-            [['project_id', 'type', 'duration', 'time_start', 'time_end'], 'integer'],
-            [['message'], 'string'],
+            [['project_id', 'type', 'duration', 'time_start', 'time_end', 'message_id'], 'integer']
         ];
     }
 
@@ -78,7 +77,7 @@ class Profiler extends \yii\db\ActiveRecord
             'date_update' => 'Date Update',
             'project_id' => 'Project ID',
             'type' => 'Type',
-            'message' => 'Message',
+            'message_id' => 'Message ID',
             'duration' => 'Duration',
             'time_start' => 'Time Start',
             'time_end' => 'Time End',

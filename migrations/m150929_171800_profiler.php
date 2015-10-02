@@ -2,6 +2,10 @@
 
 use yii\db\Migration;
 
+/**
+ * Таблица данных профайлера
+ * Class m150929_171800_profiler
+ */
 class m150929_171800_profiler extends Migration
 {
     public function up()

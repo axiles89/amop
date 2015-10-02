@@ -8,6 +8,12 @@
     "support": {
     },
     "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/axiles89/amop-profiler"
+        }
+    ],
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.5",
@@ -20,7 +26,8 @@
         "codeception/specify": "*",
         "codeception/verify": "*",
         "rmrevin/yii2-fontawesome": "~2.9",
-        "shakura/yii2-gearman": "dev-master"
+        "shakura/yii2-gearman": "dev-master",
+        "axiles89/amop-profiler": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

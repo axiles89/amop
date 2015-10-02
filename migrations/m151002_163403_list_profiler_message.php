@@ -3,10 +3,10 @@
 use yii\db\Migration;
 
 /**
- * Таблица проектов
- * Class m150916_162444_project_table
+ * Таблица списка сообщений профайлера (справочник)
+ * Class m151002_163403_list_profiler_message
  */
-class m150916_162444_project_table extends Migration
+class m151002_163403_list_profiler_message extends Migration
 {
     public function up()
     {
@@ -15,15 +15,13 @@ class m150916_162444_project_table extends Migration
             $tableOptions = 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1';
         }
 
-        if ($this->db->schema->getTableSchema('project', true) === null) {
-            $this->createTable("project", [
+        if ($this->db->schema->getTableSchema('list_profiler', true) === null) {
+            $this->createTable("list_profiler", [
                 'id' => $this->primaryKey(),
                 'date_create' => $this->dateTime(),
                 'date_update' => $this->dateTime(),
-                'title' => $this->text()->notNull(),
-                'staff_id' => $this->integer()->notNull(),
-                'description' => $this->text(),
-                'secret_key' => $this->string(30),
+                'project_id' => $this->integer()->notNull(),
+                'message' => $this->text()->notNull()
             ]);
         }
 
@@ -31,7 +29,9 @@ class m150916_162444_project_table extends Migration
 
     public function down()
     {
-        $this->dropTable("project");
+        $this->dropTable('list_profiler');
+
+        return true;
     }
 
     /*
