@@ -27,9 +27,15 @@
             'template' => '<label>{label}</label>{input}<div class="help-block">{error}</div>'])
             ->textarea(['style' => ['height' => '100px'], 'placeholder' => 'Введите описание проекта'])}
 
-            {$form->field($model, 'secret_key', ['options' => ['class' => 'form-group'],
-            'template' => '<label>{label}</label>{input}<div class="help-block">{error}</div>'])
-            ->textInput(['type' => 'text', 'placeholder' => 'Введите секретный ключ', 'value' => $app->getSecurity()->generateRandomString(30), 'readonly' => 'readonly'])}
+            {if !isset($model->secret_key)}
+                {$form->field($model, 'secret_key', ['options' => ['class' => 'form-group'],
+                'template' => '<label>{label}</label>{input}<div class="help-block">{error}</div>'])
+                ->textInput(['type' => 'text', 'placeholder' => 'Введите секретный ключ', 'value' => $app->getSecurity()->generateRandomString(30), 'readonly' => 'readonly'])}
+            {else}
+                {$form->field($model, 'secret_key', ['options' => ['class' => 'form-group'],
+                'template' => '<label>{label}</label>{input}<div class="help-block">{error}</div>'])
+                ->textInput(['type' => 'text', 'placeholder' => 'Введите секретный ключ', 'value' => $model->secret_key, 'readonly' => 'readonly'])}
+            {/if}
 
             <div class="box-footer">
 
