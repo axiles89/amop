@@ -32,14 +32,34 @@ class ProjectListConfig
             'tableOptions' => [
                 'class' => 'table table-bordered table-hover dataTable'
             ],
+            'emptyCell'=>'-',
+            'emptyText' => 'Нет результатов',
             'layout' => "{items}{summary}{pager}",
             'summary' => "<span>Показано {begin} - {end} ,  всего {totalCount}</span>",
             'pager' => [
                 'options' => ['class' => 'pagination', 'style' => ['float' => 'right']]
             ],
             'columns' => [
-                'id',
-                'title',
+                [
+                    'attribute' => 'id',
+                    'label' => 'ID',
+                    'format' => 'html',
+                    'value' => function($data) {
+                        return Html::a(
+                            $data->id,
+                            '/project/detail/'.$data->id, ['title' => 'Детальный просмотр проекта']);
+                    }
+                ],
+                [
+                    'attribute' => 'title',
+                    'label' => 'Название',
+                    'format' => 'html',
+                    'value' => function($data) {
+                        return Html::a(
+                            $data->title,
+                            '/project/detail/'.$data->id, ['title' => 'Детальный просмотр проекта']);
+                    }
+                ],
                 [
                     'attribute' => 'date_create',
                     'label' => 'Дата создания',

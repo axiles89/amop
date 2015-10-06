@@ -9,6 +9,8 @@
 
 namespace app\controllers;
 
+use app\models\amop\models\ListProfiler;
+use app\models\amop\models\Profiler;
 use Yii;
 use yii\data\ActiveDataProvider;
 use app\models\amop\models\Project;
@@ -23,7 +25,7 @@ class ProjectController extends BaseController
 {
 
     const PAGE_SIZE = 100;
-    const CACHE_TIME_LIST_PROJECT = 300;
+    const CACHE_TIME_LIST_PROJECT = 1;
 
     public function behaviors()
     {
@@ -38,6 +40,28 @@ class ProjectController extends BaseController
                 ],
             ],
         ];
+    }
+
+    public function actionDetail($id) {
+        \Yii::$app->getView()->params['leftMenu']['active'] = "project_$id";
+
+        $model = $this->findModel($id);
+
+        $query = ListProfiler::find()->where(['project_id' => $id]);
+
+        $data = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => self::PAGE_SIZE
+            ],
+            'sort' => false
+        ]);
+
+        return $this->render('detail.tpl',[
+            'model' => $model,
+            'data' => $data,
+            'total' => $query->count()
+        ]);
     }
 
     /**
