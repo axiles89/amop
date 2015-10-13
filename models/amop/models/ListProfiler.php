@@ -37,6 +37,13 @@ class ListProfiler extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProject() {
+        return $this->hasOne(Project::className(), ['id' => 'project_id']);
+    }
+
+    /**
      * Генерируем дату создания и обновляем дату обновления
      * @inheritDoc
      */

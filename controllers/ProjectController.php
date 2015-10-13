@@ -27,6 +27,9 @@ class ProjectController extends BaseController
     const PAGE_SIZE = 100;
     const CACHE_TIME_LIST_PROJECT = 1;
 
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -42,6 +45,11 @@ class ProjectController extends BaseController
         ];
     }
 
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionDetail($id) {
         \Yii::$app->getView()->params['leftMenu']['active'] = "project_$id";
 

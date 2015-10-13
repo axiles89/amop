@@ -45,7 +45,7 @@ class ProfilerListConfig
                     'value' => function($data) {
                         return Html::a(
                             $data->id,
-                            '/profiler/'.$data->id, ['title' => 'Детальный просмотр профайлера']);
+                            '/profiler/detail/'.$data->id, ['title' => 'Детальный просмотр профайлера']);
                     }
                 ],
                 [
@@ -55,7 +55,7 @@ class ProfilerListConfig
                     'value' => function($data) {
                         return Html::a(
                             $data->message,
-                            '/profiler/'.$data->id, ['title' => 'Детальный просмотр профайлера']);
+                            '/profiler/detail/'.$data->id, ['title' => 'Детальный просмотр профайлера']);
                     }
                 ],
                 [

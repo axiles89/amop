@@ -10,8 +10,10 @@
 namespace app\components\widget\leftMenu\data;
 
 
+use app\models\amop\models\ListProfiler;
 use app\models\amop\models\Project;
 use yii\base\Object;
+use yii\helpers\ArrayHelper;
 
 /**
  * Формирование массива данных для меню
@@ -47,6 +49,14 @@ class Data extends Object
                             'url' => '/project/add'
                         ]
                     ]
+                ],
+                [
+                    'label' => 'Профайлеры',
+                    'name' => 'profiler',
+                    'icon_class' => 'fa fa-inbox',
+                    'url' => "#",
+                    'item' => [
+                    ]
                 ]
             ]
         ]
@@ -68,6 +78,23 @@ class Data extends Object
         } else {
             $project = Project::find()->where(['staff_id' => \Yii::$app->user->id])->all();
             \Yii::$app->cache->set('project:user:'.\Yii::$app->user->id, $project, self::CACHE_PROJECT_TIME);
+        }
+
+        $idProject = ArrayHelper::getColumn($project, 'id');
+        $profiler = ListProfiler::find()->where(['project_id' => $idProject])
+            ->orderBy([
+                'message' => SORT_ASC,
+            ])
+            ->all();
+
+
+        // Формирование списка профайлеров для меню
+        foreach ($profiler as $valueProfiler) {
+            self::$data['menu']['item'][1]['item'][] = [
+                'label' => $valueProfiler->message,
+                'name' => "profiler_".$valueProfiler->id,
+                'icon_class' => 'fa fa-cube',
+                'url' => '/profiler/detail/'.$valueProfiler->id];
         }
 
         // Формирование списка проектов для меню
