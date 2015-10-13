@@ -27,7 +27,9 @@
         "codeception/verify": "*",
         "rmrevin/yii2-fontawesome": "~2.9",
         "shakura/yii2-gearman": "dev-master",
-        "axiles89/amop-profiler": "*"
+        "axiles89/amop-profiler": "*",
+        "2amigos/yii2-highcharts-widget" : "~1.0",
+        "yiisoft/yii2-jui": "~2.0.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
