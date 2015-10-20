@@ -41,6 +41,7 @@ class AddProfiler extends JobBase
         }
 
         if (!$listProfiler->save()) {
+            $job->sendStatus(400, 400);
             return false;
         }
 
@@ -54,8 +55,11 @@ class AddProfiler extends JobBase
         $model->time_end = $data->time_end;
 
         if (!$model->save()) {
+            $job->sendStatus(400, 400);
             return false;
         }
+
+        $job->sendStatus(200, 200);
 
         return true;
     }

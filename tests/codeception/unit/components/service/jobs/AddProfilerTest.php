@@ -80,7 +80,7 @@ class AddProfilerTest extends TestCase
         $workLoad = new JobWorkload();
         $obj = new \stdClass();
 
-        $jobMock = $this->getMockBuilder('GearmanJob')->setMethods(['workload'])->getMock();
+        $jobMock = $this->getMockBuilder('GearmanJob')->setMethods(['workload', 'sendStatus'])->getMock();
         $jobMock->expects($this->any())->method('workload')->will($this->returnCallback(function() use ($workLoad, $obj){
 
             $obj->type = 13333;
@@ -97,6 +97,10 @@ class AddProfilerTest extends TestCase
 
             $workLoad->setParams($data);
             return serialize($workLoad);
+        }));
+
+        $jobMock->expects($this->any())->method('sendStatus')->will($this->returnCallback(function(){
+            return true;
         }));
 
         $jobBase = new AddProfiler();
