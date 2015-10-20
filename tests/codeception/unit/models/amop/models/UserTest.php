@@ -55,6 +55,10 @@ class UserTest extends DbTestCase
      * Тест методов валидации
      */
     public function testValidate() {
+
+        $this->specifyConfig()
+            ->cloneOnly('db', 'components');
+
         $model = new User();
         $this->specify('validate required', function() use ($model){
             $model->login = "";
@@ -141,6 +145,7 @@ class UserTest extends DbTestCase
      * Валидация пароля
      */
     public function testValidatePassword() {
+
         $user = $this->getFixture('user')->getModel("user1");
 
         $this->assertTrue($user->validatePassword('dm1989'), 'Ошибка в методе валидации пароля');

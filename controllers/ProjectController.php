@@ -11,6 +11,7 @@ namespace app\controllers;
 
 use app\models\amop\models\ListProfiler;
 use app\models\amop\models\Profiler;
+use shakura\yii2\gearman\JobWorkload;
 use Yii;
 use yii\data\ActiveDataProvider;
 use app\models\amop\models\Project;
@@ -23,7 +24,6 @@ use yii\filters\AccessControl;
  */
 class ProjectController extends BaseController
 {
-
     const PAGE_SIZE = 100;
     const CACHE_TIME_LIST_PROJECT = 1;
 
@@ -100,6 +100,13 @@ class ProjectController extends BaseController
     public function actionDelete($id) {
 
         $model = $this->findModel($id)->delete();
+
+        $result = \Yii::$app->gearman->getDispatcher()->background('DeleteProjectData', new JobWorkload([
+            'params' => [
+                'data' => ['id' => $id]
+            ]
+        ]));
+
         \Yii::$app->response->redirect('/project/index')->send();
     }
 
@@ -109,7 +116,6 @@ class ProjectController extends BaseController
      */
     public function actionIndex()
     {
-
         $cache = false;
 
         $query = Project::find()->where(['staff_id' => Yii::$app->user->id])
