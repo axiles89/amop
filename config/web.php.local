@@ -5,12 +5,18 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'on afterRequest' => function ($event) {
+        $message = \axiles89\profiler\Profiler::getLogger()->createMessage();
+        $report = new \axiles89\profiler\Reporter\Reporter(Yii::$app->params['projectId'], Yii::$app->params['projectKey'], Yii::$app->params['amopHost']);
+        //$report->sendReport($message);
+    },
     'modules' => [
         'api' => [
             'class' => 'app\modules\api\Api',
         ],
     ],
+    'defaultRoute' => 'project/index',
+    'bootstrap' => ['log'],
     'controllerMap' => [
         'gearman' => [
             'class' => 'shakura\yii2\gearman\GearmanController',
@@ -18,6 +24,10 @@ $config = [
             ]
     ],
     'components' => [
+        'request' => [
+            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'cookieValidationKey' => 'xiUzk3pbUB1P-eDojE0MHnM_Pj5vGCZv',
+        ],
         'gearman' => [
               'class' => 'shakura\yii2\gearman\GearmanComponent',
               'servers' => [
@@ -27,15 +37,11 @@ $config = [
               'jobs' => [
                   'AddProfiler' => [
                         'class' => 'app\components\service\jobs\AddProfiler'
+                  ],
+                  'DeleteProjectData' => [
+                      'class' => 'app\components\service\jobs\DeleteProjectData'
                   ]
               ]
-        ],
-        'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'xiUzk3pbUB1P-eDojE0MHnM_Pj5vGCZv',
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
         ],
         'view' => [
             'renderers' => [
@@ -58,36 +64,35 @@ $config = [
             //'cache' => false,
             'rules' => [
                 '/<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-                '<controller:(project)>/<action:(edit|delete)>/<id:\d+>' => '<controller>/<action>'
+                '<controller:(project)>/<action:(edit|delete|detail)>/<id:\d+>' => '<controller>/<action>',
+                '<controller:(profiler)>/<action:(detail)>/<id:\d+>' => '<controller>/<action>'
             ]
         ],
         'user' => [
-            'identityClass' => 'yii\web\User',
+            'identityClass' => 'app\models\amop\models\User',
             'enableAutoLogin' => true,
+            'enableSession' => true,
             'loginUrl' => ['login/index'],
         ],
         'errorHandler' => [
             'errorAction' => 'errors/index',
         ],
         'redis' => [
-             'class' => 'yii\redis\Connection',
-             'hostname' => '127.0.0.1',
-             'port' => 6379,
-             'database' => 2,
+            'class' => 'yii\redis\Connection',
+            'hostname' => '127.0.0.1',
+            'port' => 6379,
+            'database' => 2,
         ],
         'cache' => [
-             'class' => 'yii\redis\Cache',
-             'redis' => [
-             'hostname' => '127.0.0.1',
-             'port' => 6379,
-             'database' => 2
-              ]
+            'class' => 'yii\redis\Cache',
+            'redis' => [
+                'hostname' => '127.0.0.1',
+                'port' => 6379,
+                'database' => 2
+            ]
         ],
         'session' => [
-                    'class' => 'yii\redis\Session',
-                ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
+            'class' => 'yii\redis\Session',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -105,7 +110,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
+        'db' => require(__DIR__ . '/db.php')
     ],
     'params' => $params,
 ];
@@ -115,6 +120,7 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
+        'allowedIPs' => ['192.168.68.1', '127.0.0.1', '::1']
     ];
 
     $config['bootstrap'][] = 'gii';

@@ -2,6 +2,7 @@
 
 namespace app\models\amop\models;
 
+use app\models\amop\models\ListProfiler\command\DeleteProfilerList;
 use Yii;
 
 /**
@@ -51,12 +52,30 @@ class ListProfiler extends \yii\db\ActiveRecord
     {
         if ($this->isNewRecord) {
             $this->date_create = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s');
+            $command = new DeleteProfilerList();
+            $result = $command->setData($this->project_id)->execute();
         }
 
         $this->date_update = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s');
 
         return parent::beforeSave($insert);
     }
+
+
+    /**
+     * Сохраняем данные в кеш
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        //$command = new SaveInCache();
+        //$command->setData($this->attributes)
+        //    ->execute();
+    }
+
 
     /**
      * @inheritdoc

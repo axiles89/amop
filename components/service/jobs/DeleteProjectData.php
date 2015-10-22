@@ -9,7 +9,7 @@
 
 namespace app\components\service\jobs;
 
-
+use app\models\amop\models\ListProfiler\command\DeleteProfilerList;
 use app\models\amop\models\ListProfiler;
 use app\models\amop\models\Profiler;
 use GearmanJob;
@@ -37,6 +37,11 @@ class DeleteProjectData extends JobBase
 
         ListProfiler::deleteAll(['project_id' => $id]);
         Profiler::deleteAll(['project_id' => $id]);
+
+        // Удаляем данные из кеша по профайлерам проекта
+        $command = new DeleteProfilerList();
+        $command->setData($id)->execute();
+
         $job->sendStatus(200, 200);
         return true;
     }
