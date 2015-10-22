@@ -20,7 +20,7 @@ return [
         ]
     ],
     'components' => [
-       'gearman' => [
+        'gearman' => [
             'class' => 'shakura\yii2\gearman\GearmanComponent',
             'servers' => [
                 ['host' => '127.0.0.1', 'port' => 4730],
@@ -29,8 +29,17 @@ return [
             'jobs' => [
                 'AddProfiler' => [
                     'class' => 'app\components\service\jobs\AddProfiler'
+                ],
+                'DeleteProjectData' => [
+                    'class' => 'app\components\service\jobs\DeleteProjectData'
                 ]
             ]
+        ],
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => '127.0.0.1',
+            'port' => 6379,
+            'database' => 2,
         ],
         'user' => [
             'class' => 'app\models\amop\models\User',

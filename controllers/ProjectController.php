@@ -101,12 +101,6 @@ class ProjectController extends BaseController
 
         $model = $this->findModel($id)->delete();
 
-        $result = \Yii::$app->gearman->getDispatcher()->background('DeleteProjectData', new JobWorkload([
-            'params' => [
-                'data' => ['id' => $id]
-            ]
-        ]));
-
         \Yii::$app->response->redirect('/project/index')->send();
     }
 

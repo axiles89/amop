@@ -73,6 +73,7 @@ class Data extends Object
             self::$data['menu']['active'] = $active;
         }
 
+        // Берем список проектов пользователя
         if (\Yii::$app->cache->exists('project:user:'.\Yii::$app->user->id)) {
             $project = \Yii::$app->cache->get('project:user:'.\Yii::$app->user->id);
         } else {
@@ -81,20 +82,19 @@ class Data extends Object
         }
 
         $idProject = ArrayHelper::getColumn($project, 'id');
-        $profiler = ListProfiler::find()->where(['project_id' => $idProject])
-            ->orderBy([
-                'message' => SORT_ASC,
-            ])
-            ->all();
 
+        // Получение списка профайлеров по проектам
+        $command = new ListProfiler\command\GetProfilerList();
+        $command->setClassModel('app\models\amop\models\ListProfiler');
+        $profiler = $command->setData($idProject)->execute();
 
         // Формирование списка профайлеров для меню
         foreach ($profiler as $valueProfiler) {
             self::$data['menu']['item'][1]['item'][] = [
-                'label' => $valueProfiler->message,
-                'name' => "profiler_".$valueProfiler->id,
+                'label' => $valueProfiler['message'],
+                'name' => "profiler_".$valueProfiler['id'],
                 'icon_class' => 'fa fa-cube',
-                'url' => '/profiler/detail/'.$valueProfiler->id];
+                'url' => '/profiler/detail/'.$valueProfiler['id']];
         }
 
         // Формирование списка проектов для меню
