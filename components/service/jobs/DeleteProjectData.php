@@ -16,7 +16,7 @@ use GearmanJob;
 use shakura\yii2\gearman\JobBase;
 
 /**
- * Âîðêåð óäàëåíèÿ âñåõ äàííûõ ïî ïðîåêòó
+ * Ã‚Ã®Ã°ÃªÃ¥Ã° Ã³Ã¤Ã Ã«Ã¥Ã­Ã¨Ã¿ Ã¢Ã±Ã¥Ãµ Ã¤Ã Ã­Ã­Ã»Ãµ Ã¯Ã® Ã¯Ã°Ã®Ã¥ÃªÃ²Ã³
  * Class DeleteProjectData
  * @package app\components\service\jobs
  */
@@ -26,8 +26,7 @@ class DeleteProjectData extends JobBase
      * @param GearmanJob|null $job
      * @return mixed
      */
-    public function execute(GearmanJob $job = null)
-    {
+    public function execute(GearmanJob $job = null) {
         $id = $data = $this->getWorkload($job)->getParams()['data']['id'];
 
         if (!is_int($id)) {
@@ -38,7 +37,7 @@ class DeleteProjectData extends JobBase
         ListProfiler::deleteAll(['project_id' => $id]);
         Profiler::deleteAll(['project_id' => $id]);
 
-        // Óäàëÿåì äàííûå èç êåøà ïî ïðîôàéëåðàì ïðîåêòà
+        // Ã“Ã¤Ã Ã«Ã¿Ã¥Ã¬ Ã¤Ã Ã­Ã­Ã»Ã¥ Ã¨Ã§ ÃªÃ¥Ã¸Ã  Ã¯Ã® Ã¯Ã°Ã®Ã´Ã Ã©Ã«Ã¥Ã°Ã Ã¬ Ã¯Ã°Ã®Ã¥ÃªÃ²Ã 
         $command = new DeleteProfilerList();
         $command->setData($id)->execute();
 

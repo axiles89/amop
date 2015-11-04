@@ -69,7 +69,26 @@ class ProfilerListConfig
                     'label' => 'Дата обновления',
                     'format' => ['date', 'dd.MM.Y  HH:mm'],
                     'headerOptions' => ['width' => '200']
-                ]
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'header'=>'Действия',
+                    'contentOptions' => ['style' => ['text-align' => 'center']],
+                    'headerOptions' => ['width' => '80'],
+                    'template' => '{delete}',
+                    'buttons' => [
+                        'delete' => function ($url, $model) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-trash"></span>',
+                                '/project/delete-profile/'.$model->id, [
+                                    'title' => 'Удалить',
+                                    'data-confirm' => 'Действительно удалить проект?',
+                                    'data-method' => 'post',
+                                    'data-pjax' => '1',
+                                ]);
+                        }
+                    ],
+                ],
             ]
         ];
     }

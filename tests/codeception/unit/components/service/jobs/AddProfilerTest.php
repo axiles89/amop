@@ -73,7 +73,7 @@ class AddProfilerTest extends TestCase
 
 
     /**
-     * Тестирование выполнения job
+     * Г’ГҐГ±ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГўГ»ГЇГ®Г«Г­ГҐГ­ГЁГї job
      */
     public function testExecute() {
 

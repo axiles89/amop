@@ -1,26 +1,22 @@
 <?php
 /**
- * DeleteProjectDataTest.php
+ * DeleteListProfileDataTest.php
  *
  * @package tests\codeception\unit\components\service\jobs
- * @date: 20.10.2015 19:32
- * @author: Kyshnerev Dmitriy <dimkysh@mail.ru>
+ * @date: 04.11.2015 21:55
+ * @author: Dianov German <es_dianoff@yahoo.com>
  */
 
 namespace tests\codeception\unit\components\service\jobs;
 
 
-use app\components\service\jobs\DeleteProjectData;
+use app\components\service\jobs\DeleteListProfileData;
 use Codeception\Specify;
 use shakura\yii2\gearman\JobWorkload;
 use yii\codeception\TestCase;
 
-/**
- * “естирование воркера удалени€ данных по проекту
- * Class DeleteProjectDataTest
- * @package tests\codeception\unit\components\service\jobs
- */
-class DeleteProjectDataTest extends TestCase
+
+class DeleteListProfileDataTest extends TestCase
 {
     use Specify;
 
@@ -44,11 +40,9 @@ class DeleteProjectDataTest extends TestCase
      *
      */
     public function testExecute() {
-
-        $workLoad = new JobWorkload();
-
-        $jobMock = $this->getMockBuilder('GearmanJob')->setMethods(['workload', 'sendStatus'])->getMock();
-        $jobMock->expects($this->any())->method('workload')->will($this->returnCallback(function() use ($workLoad){
+       $workLoad = new JobWorkload();
+       $jobMock = $this->getMockBuilder('GearmanJob')->setMethods(['workload', 'sendStatus'])->getMock();
+       $jobMock->expects($this->any())->method('workload')->will($this->returnCallback(function() use ($workLoad){
 
             $id = 'ddd';
 
@@ -59,17 +53,17 @@ class DeleteProjectDataTest extends TestCase
             $workLoad->setParams($data);
             return serialize($workLoad);
         }));
-
+       
         $jobMock->expects($this->any())->method('sendStatus')->will($this->returnCallback(function(){
            return true;
         }));
-
-        $jobBase = new DeleteProjectData();
+        
+        $jobBase = new DeleteListProfileData();
         $result = $jobBase->execute($jobMock);
 
-        $this->assertFalse($result, 'DeleteProjectData job is broken!');
-
+        $this->assertFalse($result, 'DeleteListProfileData job is broken!');
+        
     }
-
-
+ 
 }
+
