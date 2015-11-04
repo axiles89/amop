@@ -71,6 +71,17 @@ class ProjectController extends BaseController
             'total' => $query->count()
         ]);
     }
+    
+    /**
+     * @author Dianov German <es_dianoff@yahoo.com>
+     * Action call delete profile list
+     * @param $id profile id
+     */
+    
+    public function actionDeleteProfile($id) {
+        $model = $this->findModelListProfile($id)->delete();
+        \Yii::$app->response->redirect('/project/index')->send();
+    }
 
     /**
      * Редактирование проекта
@@ -170,6 +181,17 @@ class ProjectController extends BaseController
             return $model;
         } else {
             throw new NotFoundHttpException('Проект не найден');
+        }
+    }
+    
+    
+    
+    protected function findModelListProfile($id)
+    {
+        if (($model = ListProfiler::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('List Profile not found');
         }
     }
 
