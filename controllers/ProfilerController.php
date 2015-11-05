@@ -16,6 +16,7 @@ use app\models\amop\models\Project;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
+use yii\data\ActiveDataProvider;
 
 /**
  * Class ProfilerController
@@ -23,6 +24,8 @@ use yii\web\NotFoundHttpException;
  */
 class ProfilerController extends BaseController
 {
+    const PAGE_SIZE = 3;
+
     public function behaviors()
     {
         return [
@@ -38,9 +41,22 @@ class ProfilerController extends BaseController
         ];
     }
 
+
+     /**
+     * @author Dianov German <es_dianoff@yahoo.com>
+     * Action call delete profile
+     * @param $id profile id
+     */
+    
+    public function actionDeleteProfile($id) {
+        echo $id;
+        die();
+    }
+
+
+
     public function actionDetail($id) {
         $profiler = $this->findProfiler($id);
-
         $project = Project::findOne($profiler->project_id);
 
         if (!$project) {
@@ -49,9 +65,21 @@ class ProfilerController extends BaseController
 
         \Yii::$app->getView()->params['leftMenu']['active'] = "profiler_{$profiler->id}";
 
+        $query = Profiler::find()->where(['message_id' => $id])->orderBy('id desc'); 
+ 
+
+        $data = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => self::PAGE_SIZE
+            ],
+            'sort' => false
+        ]);
+
         return $this->render('detail.tpl',[
             'model' => $project,
             'profiler' => $profiler,
+            'data'  => $data,
             'totalMessage' => Profiler::find()->where(['message_id' => $id])->count(),
             'total' => ListProfiler::find()->where(['project_id' => $project->id])->count()
         ]);
