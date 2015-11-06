@@ -10,7 +10,7 @@
 namespace app\components\widget\config\gridView;
 
 use yii\helpers\Html;
-
+use Yii;
 /**
  * Конфигурация вывода списка профайлеров
  * Class ProfilerListConfig
@@ -45,11 +45,6 @@ class ProfileListDataConfig
                     'label' => 'ID',
                     'format' => 'html',
                     'headerOptions' => ['width' => '50'],
-                    'value' => function($data) {
-                        return Html::a(
-                            $data->id,
-                            '/profiler/detail/'.$data->id, ['title' => 'Детальный просмотр профайлера']);
-                    }
                 ],
                 [
                     'attribute' => 'date_create',
@@ -70,7 +65,7 @@ class ProfileListDataConfig
                     'format' => 'html',
                     'headerOptions' => ['width' => '200'],
                     'value' => function($data) {
-                        return date("H:i:s",$data->time_start/1000);
+                        return Yii::$app->formatter->asDate($data->time_start/1000, 'yyyy-MM-dd H:m:s');
                     }
                 ],
                 [
@@ -79,7 +74,7 @@ class ProfileListDataConfig
                     'format' => 'html',
                     'headerOptions' => ['width' => '200'],
                     'value' => function($data) {
-                        return date("H:i:s",$data->time_end/1000);
+                         return Yii::$app->formatter->asDate($data->time_end/1000, 'yyyy-MM-dd H:m:s');
                     }
                 ],
                 [
@@ -92,7 +87,7 @@ class ProfileListDataConfig
                         'delete' => function ($url, $model) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-trash"></span>',
-                                '/profiler/delete-profile/'.$model->id, [
+                                '/profiler/delete-profiler/'.$model->id, [
                                     'title' => 'Удалить',
                                     'data-confirm' => 'Действительно удалить запись?',
                                     'data-method' => 'post',

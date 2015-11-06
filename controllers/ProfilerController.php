@@ -17,7 +17,6 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
-
 /**
  * Class ProfilerController
  * @package app\controllers
@@ -44,13 +43,13 @@ class ProfilerController extends BaseController
 
      /**
      * @author Dianov German <es_dianoff@yahoo.com>
-     * Action call delete profile
-     * @param $id profile id
+     * Action call delete profiler
+     * @param $id profiler id
      */
     
-    public function actionDeleteProfile($id) {
-        echo $id;
-        die();
+    public function actionDeleteProfiler($id) {
+        $model = $this->findModelListProfiler($id)->delete();
+        \Yii::$app->response->redirect(\Yii::$app->request->referrer);
     }
 
 
@@ -85,11 +84,32 @@ class ProfilerController extends BaseController
         ]);
     }
 
+
+     /**
+     * @author Dianov German <es_dianoff@yahoo.com>
+     * Find profile list by ID
+     * @param $id profiler id
+     */
     protected function findProfiler($id) {
         if (($model = ListProfiler::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('Профайлер не найден');
+        }
+    }
+
+
+     /**
+     * @author Dianov German <es_dianoff@yahoo.com>
+     * Find profiler by ID
+     * @param $id profiler id
+     */
+    protected function findModelListProfiler($id)
+    {
+        if (($model = Profiler::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Profiler not found');
         }
     }
 

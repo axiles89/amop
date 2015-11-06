@@ -3,7 +3,7 @@
 namespace app\models\amop\models;
 
 use Yii;
-
+use shakura\yii2\gearman\JobWorkload;
 /**
  * This is the model class for table "profiler".
  *
@@ -65,6 +65,7 @@ class Profiler extends \yii\db\ActiveRecord
 
         return parent::beforeSave($insert);
     }
+
 
     /**
      * @inheritdoc
