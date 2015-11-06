@@ -10,6 +10,9 @@
 namespace app\components\widget\leftMenu\data;
 
 
+use app\models\amop\commands\countData\ProfilerCountData;
+use app\models\amop\commands\LastActiveDate;
+use app\models\amop\commands\lastActiveDate\ProfilerActiveDate;
 use app\models\amop\models\ListProfiler;
 use app\models\amop\models\Project;
 use yii\base\Object;
@@ -53,6 +56,10 @@ class Data extends Object
                 [
                     'label' => 'Профайлеры',
                     'name' => 'profiler',
+                    'class' => 'total_profiler',
+                    'badges' => [
+                        'class' => "label label-primary pull-right"
+                    ],
                     'icon_class' => 'fa fa-inbox',
                     'url' => "#",
                     'item' => [
@@ -90,11 +97,18 @@ class Data extends Object
 
         // Формирование списка профайлеров для меню
         foreach ($profiler as $valueProfiler) {
-            self::$data['menu']['item'][1]['item'][] = [
+
+            $profilerMenu = [
                 'label' => $valueProfiler['message'],
                 'name' => "profiler_".$valueProfiler['id'],
+                'class' => "profiler_".$valueProfiler['id'],
                 'icon_class' => 'fa fa-cube',
+                'badges' => [
+                    'class' => "label pull-right bg-red"
+                ],
                 'url' => '/profiler/detail/'.$valueProfiler['id']];
+
+            self::$data['menu']['item'][1]['item'][] = $profilerMenu;
         }
 
         // Формирование списка проектов для меню

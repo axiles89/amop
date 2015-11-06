@@ -23,11 +23,11 @@
             {if (isset($menu.header))}<li class="header">{$menu.header}</li>{/if}
 
             {foreach $menu.item as $valueItem}
-                <li class="{if isset($valueItem.item)}treeview{/if} {if isset($valueItem.active)}active{/if}">
+                <li class="{if isset($valueItem.item)}treeview{/if} {if isset($valueItem.active)}active{/if} {if isset($valueItem.class)}{$valueItem.class}{/if}">
                     <a href="{if isset($valueItem.url)}{$valueItem.url}{/if}">
                         <i class="{$valueItem.icon_class}"></i> <span>{$valueItem.label}</span>
 
-                        {if isset($valueItem.badges)}
+                        {if isset($valueItem.badges) and isset($valueItem.badges.label)}
                             <{if !isset($valueItem.badges.tag)}span{else}{$valueItem.badges.tag}{/if}
                                     class="{if isset($valueItem.badges.class)}{$valueItem.badges.class}{/if}">
                                 {if isset($valueItem.badges.label)}{$valueItem.badges.label}{/if}
@@ -39,11 +39,11 @@
                         <ul class="treeview-menu">
 
                             {foreach $valueItem.item as $valueItem2}
-                                <li class="{if isset($valueItem2.active)}active{/if}">
+                                <li class="{if isset($valueItem2.active)}active{/if} {if isset($valueItem2.class)}{$valueItem2.class}{/if}">
                                     <a href="{if isset($valueItem2.url)}{$valueItem2.url}{/if}">
                                         <i class="{$valueItem2.icon_class}"></i> <span>{$valueItem2.label}</span>
 
-                                        {if isset($valueItem2.badges)}
+                                        {if isset($valueItem2.badges) and isset($valueItem2.badges.label)}
                                             <{if !isset($valueItem2.badges.tag)}span{else}{$valueItem2.badges.tag}{/if}
                                                     class="{if isset($valueItem2.badges.class)}{$valueItem2.badges.class}{/if}">
                                                 {if isset($valueItem2.badges.label)}{$valueItem2.badges.label}{/if}
