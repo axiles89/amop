@@ -90,7 +90,10 @@ class Project extends \yii\db\ActiveRecord
         // Создаем задачу на удаление всех данных по проекту
         $result = \Yii::$app->gearman->getDispatcher()->background('DeleteProjectData', new JobWorkload([
             'params' => [
-                'data' => ['id' => $this->id]
+                'data' => [
+                    'id' => $this->id,
+                    'staff_id' => $this->staff_id
+                ]
             ]
         ]));
 

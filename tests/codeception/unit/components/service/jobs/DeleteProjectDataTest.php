@@ -53,7 +53,10 @@ class DeleteProjectDataTest extends TestCase
             $id = 'ddd';
 
             $data = [
-                'data' => ['id' => $id]
+                'data' => [
+                    'id' => $id,
+                    'staff_id' => 16
+                ]
             ];
 
             $workLoad->setParams($data);

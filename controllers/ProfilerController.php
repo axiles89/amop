@@ -10,6 +10,7 @@
 namespace app\controllers;
 
 
+use app\models\amop\commands\LastActiveDate;
 use app\models\amop\models\ListProfiler;
 use app\models\amop\models\Profiler;
 use app\models\amop\models\Project;
@@ -58,6 +59,12 @@ class ProfilerController extends BaseController
 
     public function actionDetail($id) {
         $profiler = $this->findProfiler($id);
+
+        LastActiveDate::getModel(LastActiveDate::TYPE_PROFILER)
+            ->setData((integer)$id)
+            ->setUserId(\Yii::$app->user->id)
+            ->save();
+
         $project = Project::findOne($profiler->project_id);
 
         if (!$project) {

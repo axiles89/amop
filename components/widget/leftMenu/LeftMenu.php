@@ -10,7 +10,7 @@
 namespace app\components\widget\leftMenu;
 
 
-use app\assets\AppAsset;
+use app\assets\CounterAsset;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
 
@@ -31,7 +31,7 @@ class LeftMenu extends Widget
      */
     public function init()
     {
-        AppAsset::register($this->getView());
+        CounterAsset::register($this->getView());
         parent::init();
     }
 

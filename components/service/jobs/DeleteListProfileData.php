@@ -9,6 +9,7 @@
 
 namespace app\components\service\jobs;
 
+use app\models\amop\commands\LastActiveDate;
 use app\models\amop\models\ListProfiler;
 use app\models\amop\models\Profiler;
 use GearmanJob;
@@ -31,16 +32,25 @@ class DeleteListProfileData extends JobBase
     public function execute(GearmanJob $job = null) {
         $data = $this->getWorkload($job)->getParams()['data'];
         
-        if (!isset($data['id']) or !isset($data['project_id']) or !is_int($data['id']) or !is_int($data['project_id'])) {
+        if (!isset($data['id']) or !isset($data['project_id']) or !isset($data['staff_id']) or !is_int($data['staff_id']) or !is_int($data['id']) or !is_int($data['project_id'])) {
             $job->sendStatus(400, 400);
             return false;
         }
         
         $id = $data['id'];
         $project_id = $data['project_id'];
-        
+        $staff = $data['staff_id'];
+
+        // Удаление из кеша даты последнего просмотра пользователем профайлера
+        LastActiveDate::getModel(LastActiveDate::TYPE_PROFILER)
+            ->setData($id)
+            ->setUserId($staff)
+            ->delete();
+
+        // Удаление всех данных по профайлеру
         Profiler::deleteAll(['message_id' => $id]);
-        
+
+        // Удаление из кеша списка профайлеров по проекту
         $command = new DeleteProfilerList();
         $command->setData($project_id)->execute();
         

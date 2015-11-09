@@ -84,11 +84,12 @@ class ListProfiler extends \yii\db\ActiveRecord
      */
     public function beforeDelete()
     {
-        $result = \Yii::$app->gearman->getDispatcher()->execute('DeleteListProfileData', new JobWorkload([
+        $result = \Yii::$app->gearman->getDispatcher()->background('DeleteListProfileData', new JobWorkload([
             'params' => [
                 'data' => [
                     'id' => $this->id,
                     'project_id' => $this->project_id,
+                    'staff_id' => $this->project->staff_id
                 ]
             ]
         ]));
