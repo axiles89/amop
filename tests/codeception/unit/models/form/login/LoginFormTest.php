@@ -36,6 +36,9 @@ class LoginFormTest extends \yii\codeception\TestCase
      */
     public function testValidatePassword() {
 
+        $this->specifyConfig()
+            ->cloneOnly('db', 'components');
+
         $this->specify('validate password (success)', function(){
             $model = new LoginForm();
             $model->email = $this->getFixture('user')->getModel('user1')->email;
@@ -70,6 +73,9 @@ class LoginFormTest extends \yii\codeception\TestCase
      */
     public function testValidate()
     {
+        $this->specifyConfig()
+            ->cloneOnly('db', 'components');
+
         $model = new LoginForm();
 
         $this->specify("validate latin word", function() use ($model) {
