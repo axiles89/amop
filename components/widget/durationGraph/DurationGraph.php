@@ -76,5 +76,23 @@ class DurationGraph extends Widget
         ]);
     }
 
+    /**
+     * Function get query filter
+     * @param $messageid 
+     * @return ActiveQuery object
+     */
+    public static function getQuery($messageId) {
+        $filter = new Filter();
+        $filter->load(\Yii::$app->request->get());
+        $filter->validate();
+        $data = Profiler::find()->andWhere(['message_id' => $messageId])
+            ->andWhere(['>=', 'date_create', $filter->date_create_from])
+            ->andWhere(['<', 'date_create', $filter->date_create_to.' 23:59']);
+        return $data;
+
+    }
+
+
+
 
 }

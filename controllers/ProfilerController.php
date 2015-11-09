@@ -17,6 +17,8 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
+use app\components\widget\durationGraph\DurationGraph;
+
 /**
  * Class ProfilerController
  * @package app\controllers
@@ -64,11 +66,10 @@ class ProfilerController extends BaseController
 
         \Yii::$app->getView()->params['leftMenu']['active'] = "profiler_{$profiler->id}";
 
-        $query = Profiler::find()->where(['message_id' => $id])->orderBy('id desc'); 
  
-
+     
         $data = new ActiveDataProvider([
-            'query' => $query,
+            'query' => DurationGraph::getQuery($id),
             'pagination' => [
                 'pageSize' => self::PAGE_SIZE
             ],
