@@ -55,7 +55,7 @@ class ProfilerController extends Controller
             $message = $object;
             $message->date_create = $data->dateCreate;
             $message->project_id = $data->projectId;
-
+       
             $result = \Yii::$app->gearman->getDispatcher()->background('AddProfiler', new JobWorkload([
                 'params' => [
                     'data' => $message

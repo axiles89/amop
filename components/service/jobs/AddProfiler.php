@@ -30,7 +30,7 @@ class AddProfiler extends JobBase
     public function execute(GearmanJob $job = null)
     {
         $data = $this->getWorkload($job)->getParams()['data'];
-
+     
         // Создаем нужный элемент профилирования
         $listProfiler = ListProfiler::findOne(['message' => $data->message, 'project_id' => $data->project_id]);
 
