@@ -50,9 +50,18 @@ class AddProfiler extends JobBase
         $model->project_id = $data->project_id;
         $model->type = $data->type;
         $model->message_id = $listProfiler->id;
+
         $model->duration = $data->duration;
         $model->time_start = $data->time_start;
         $model->time_end = $data->time_end;
+
+        $model->memory = $data->memory;
+        $model->memory_start = $data->memory_start;
+        $model->memory_end = $data->memory_end;
+
+        $model->cpu = $data->cpu;
+        $model->cpu_start = $data->cpu_start;
+        $model->cpu_end = $data->cpu_end;
 
         if (!$model->save()) {
             $job->sendStatus(400, 400);

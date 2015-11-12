@@ -47,7 +47,7 @@ class Profiler extends \yii\db\ActiveRecord
                 }
             }],
             [['date_create', 'date_update'], 'date', 'format' => 'yyyy-MM-dd H:m:s'],
-            [['project_id', 'type', 'duration', 'time_start', 'time_end', 'message_id'], 'integer']
+            [['project_id', 'type', 'duration', 'time_start', 'time_end', 'message_id', 'memory', 'memory_start', 'memory_end', 'cpu', 'cpu_start', 'cpu_end'], 'integer']
         ];
     }
 
@@ -82,6 +82,12 @@ class Profiler extends \yii\db\ActiveRecord
             'duration' => 'Duration',
             'time_start' => 'Time Start',
             'time_end' => 'Time End',
+            'memory' => 'Memory',
+            'memory_start' => 'Memory Start',
+            'memory_end' => 'Memory End',
+            'cpu' => 'Cpu',
+            'cpu_start' => 'Cpu Start',
+            'cpu_end' => 'Cpu End',
         ];
     }
 }
